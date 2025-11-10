@@ -26,6 +26,7 @@ Todo o programa foi construído com **funções puras** para a lógica de negóc
 ---
 
 ## Estrutura do Projeto
+```bash
 inventario-haskell/
 │
 ├── src/
@@ -34,6 +35,7 @@ inventario-haskell/
 ├── Inventario.dat # Persistência do inventário
 ├── Auditoria.log # Registro das operações
 └── README.md # Documentação
+```
 
 ---
 
