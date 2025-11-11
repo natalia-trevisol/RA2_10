@@ -56,7 +56,7 @@ inventario-haskell/
 ### Executar no **Online GDB** ou **Replit**
 1. Acesse [https://www.onlinegdb.com/](https://www.onlinegdb.com/).
 2. Crie um novo projeto e selecione a linguagem **Haskell**.
-3. Copie o conteúdo do arquivo `Inventario.hs` da pasta `src/` para o ambiente ou baixe e faça o upload de `Inventario.hs` no ambiente online.
+3. Copie o conteúdo do arquivo `main.hs` da pasta `src/` para o ambiente ou baixe e faça o upload de `main.hs` no ambiente online.
 4. Execute o programa clicando em **Run**.
 5. O programa iniciará o loop interativo. Para visualizar os comandos basta digitar no terminal "help".
 6. Siga as instruções no terminal para adicionar, remover, atualizar itens ou gerar relatórios digitando os comandos no terminal.
