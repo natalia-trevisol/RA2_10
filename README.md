@@ -256,7 +256,8 @@ item9 | nome9 | qtd: 19 | cat: cat0
  - Verificar se o Auditoria.log contém uma LogEntry com StatusLog (Falha ...)
    
 **Resultados Observados:**
- Mensagem de erro clara exibida:
+
+Mensagem de erro clara exibida:
 ```bash
 ERRO: Estoque insuficiente para item14 (tem 10, pediu 15)
 ```
@@ -309,7 +310,7 @@ LogEntry {timestamp = 2025-11-11 02:13:25.709935335 UTC, acao = Remove,
 detalhes = "Remove falha: Estoque insuficiente para item14 (tem 10, pediu 15)", 
 status = Falha "Estoque insuficiente para item14 (tem 10, pediu 15)"}
 ```
-- Item mais movimentado calculado: Função itemMaisMovimentado identificou "Add:" como operação mais frequente (4 ocorrências)
+- Item mais movimentado calculado: função itemMaisMovimentado identificou "Add:" como operação mais frequente (4 ocorrências).
 
 **Comandos executados (terminal):**
 ```bash
