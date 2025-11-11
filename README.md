@@ -128,6 +128,19 @@ data LogEntry = LogEntry
   } deriving (Show, Read)
 ```
 
+--- 
+
+## Testes de Serialização
+
+Foi testado que todos os tipos podem ser serializados e desserializados corretamente. Exemplo de teste:
+```bash
+add teste1 Produto1 10 Categoria1
+list
+remove teste1 5
+list
+exit
+```
+
 ---
 
 ## Principais Funções Puras
@@ -141,6 +154,12 @@ data LogEntry = LogEntry
 | `logsDeErro`       | Filtra apenas as falhas do log             | `[LogEntry] -> [LogEntry]`                                                  |
 | `historicoPorItem` | Retorna o histórico de um item             | `String -> [LogEntry] -> [LogEntry]`                                        |
 | `itemMaisMovimentado` | Conta movimentações por item e retorna o mais citado  | `[LogEntry] -> Maybe (String, Int)`                           |
+
+### Lógica de validação implementada:
+- IDs duplicados (addItem)
+- Estoque insuficiente (removeItem) 
+- Quantidades negativas (updateQty)
+- Item não encontrado (removeItem, updateQty)
 
 ---
 
@@ -166,7 +185,68 @@ data LogEntry = LogEntry
  - Executar um comando de "listar" (a ser criado) ou verificar se o estado carregado em memória contém os 3 itens.
    
 **Resultados Observados:**
-(Preencher após o teste)
+
+Arquivos criados com sucesso:
+- `Inventario.dat`: Criado com 13 itens (10 do populateSample + 3 adicionados manualmente)
+- `Auditoria.log`: Criado com 5 entradas de log iniciais
+
+Persistência comprovada:
+- Primeira execução: 0 itens carregados → 13 itens após operações
+- Segunda execução: 13 itens carregados corretamente do arquivo
+- Comando `list` confirmou que todos os 13 itens foram restaurados
+
+**Comandos executados (terminal):**
+```bash
+Iniciando Inventario (RA2) - carregando dados...
+Itens carregados: 0
+Entradas de log carregadas: 0
+Digite 'help' para ver os comandos disponiveis.
+> populateSample
+SUCESSO: 10 itens de exemplo adicionados ao inventario.
+> list
+Inventario atual:
+item1 | nome1 | qtd: 11 | cat: cat1
+item10 | nome10 | qtd: 20 | cat: cat1
+item2 | nome2 | qtd: 12 | cat: cat2
+item3 | nome3 | qtd: 13 | cat: cat0
+item4 | nome4 | qtd: 14 | cat: cat1
+item5 | nome5 | qtd: 15 | cat: cat2
+item6 | nome6 | qtd: 16 | cat: cat0
+item7 | nome7 | qtd: 17 | cat: cat1
+item8 | nome8 | qtd: 18 | cat: cat2
+item9 | nome9 | qtd: 19 | cat: cat0
+> add item11 nome11 21 cat21
+SUCESSO: Item adicionado ao inventario.
+> add item12 nome12 22 cat22
+SUCESSO: Item adicionado ao inventario.
+> add item13 nome13 23 cat23
+SUCESSO: Item adicionado ao inventario.
+> exit
+Saindo...
+```
+
+Após reiniciar programa: 
+```bash
+Iniciando Inventario (RA2) - carregando dados...
+Itens carregados: 13
+Entradas de log carregadas: 5
+Digite 'help' para ver os comandos disponiveis.
+> list
+Inventario atual:
+item1 | nome1 | qtd: 11 | cat: cat1
+item10 | nome10 | qtd: 20 | cat: cat1
+item11 | nome11 | qtd: 21 | cat: cat21
+item12 | nome12 | qtd: 22 | cat: cat22
+item13 | nome13 | qtd: 23 | cat: cat23
+item2 | nome2 | qtd: 12 | cat: cat2
+item3 | nome3 | qtd: 13 | cat: cat0
+item4 | nome4 | qtd: 14 | cat: cat1
+item5 | nome5 | qtd: 15 | cat: cat2
+item6 | nome6 | qtd: 16 | cat: cat0
+item7 | nome7 | qtd: 17 | cat: cat1
+item8 | nome8 | qtd: 18 | cat: cat2
+item9 | nome9 | qtd: 19 | cat: cat0
+```
 
 ### Cenário 2: Erro de Lógica (Estoque Insuficiente)
  - Adicionar item “Teclado” com 10 unidades.
@@ -176,14 +256,72 @@ data LogEntry = LogEntry
  - Verificar se o Auditoria.log contém uma LogEntry com StatusLog (Falha ...)
    
 **Resultados Observados:**
-(Preencher após o teste)
+ Mensagem de erro clara exibida:
+```bash
+ERRO: Estoque insuficiente para item14 (tem 10, pediu 15)
+```
+
+Estado preservado:
+- `Inventario.dat`: Manteve item14 com 10 unidades (não alterado)
+- `list` confirmou: item14 | teclado | qtd: 10 | cat: eletronicos
+
+Log de falha registrado:
+- `Auditoria.log` contém: LogEntry {..., acao = Remove, detalhes = "Remove falha: Estoque insuficiente...", status = Falha "Estoque insuficiente..."}
+
+**Comandos executados (terminal):**
+```bash
+Iniciando Inventario (RA2) - carregando dados...
+Itens carregados: 13
+Entradas de log carregadas: 6
+Digite 'help' para ver os comandos disponiveis.
+> add item14 teclado 10 eletronicos
+SUCESSO: Item adicionado ao inventario.
+> list
+Inventario atual:
+item1 | nome1 | qtd: 11 | cat: cat1
+item10 | nome10 | qtd: 20 | cat: cat1
+item11 | nome11 | qtd: 21 | cat: cat21
+item12 | nome12 | qtd: 22 | cat: cat22
+item13 | nome13 | qtd: 23 | cat: cat23
+item14 | teclado | qtd: 10 | cat: eletronicos
+item2 | nome2 | qtd: 12 | cat: cat2
+item3 | nome3 | qtd: 13 | cat: cat0
+item4 | nome4 | qtd: 14 | cat: cat1
+item5 | nome5 | qtd: 15 | cat: cat2
+item6 | nome6 | qtd: 16 | cat: cat0
+item7 | nome7 | qtd: 17 | cat: cat1
+item8 | nome8 | qtd: 18 | cat: cat2
+item9 | nome9 | qtd: 19 | cat: cat0
+> remove item14 15
+ERRO: Estoque insuficiente para item14 (tem 10, pediu 15)
+```
 
 ### Cenário 3: Geração de Relatório de Erros
  - Após o cenário 2, executar comando report.
  - Verificar se o relatório gerado (especificamente pela função logsDeErro) exibe a entrada de log referente à falha registrada no Cenário 2 (a tentativa de remover estoque insuficiente).
    
-**Resultados Observados:**
-(Preencher após o teste)
+**Resultados Observados:** 
+
+Relatório gerou corretamente:
+- Função logsDeErro identificou e exibiu o erro do Cenário 2:
+```bash
+LogEntry {timestamp = 2025-11-11 02:13:25.709935335 UTC, acao = Remove, 
+detalhes = "Remove falha: Estoque insuficiente para item14 (tem 10, pediu 15)", 
+status = Falha "Estoque insuficiente para item14 (tem 10, pediu 15)"}
+```
+- Item mais movimentado calculado: Função itemMaisMovimentado identificou "Add:" como operação mais frequente (4 ocorrências)
+
+**Comandos executados (terminal):**
+```bash
+> report
+---- Relatorios ----
+Erros registrados (logsDeErro):
+LogEntry {timestamp = 2025-11-11 02:13:25.709935335 UTC, acao = Remove, detalhes = "Remove falha: Estoque insuficiente para item14 (tem 10, pediu 15)", status = Falha "Estoque insuficiente para item14 (tem 10, pediu 15)"}
+Item mais movimentado (palavras nas descricoes):
+Add: -> 4
+> exit
+Saindo...
+```
 
 --- 
 
