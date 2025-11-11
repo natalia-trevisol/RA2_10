@@ -63,7 +63,7 @@ inventario-haskell/
 7. Após encerrar, verifique que os arquivos Inventario.dat e Auditoria.log foram criados automaticamente.
 
 > Link direto para execução:
-> **[Executar no Online GDB](COLE_O_LINK_AQUI_APÓS_PUBLICAR)**
+> **[Executar no Online GDB](https://www.onlinegdb.com/edit/XlEA4SaCsQ)**
 
 ---
 
