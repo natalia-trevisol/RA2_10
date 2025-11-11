@@ -1,0 +1,17 @@
+LogEntry {timestamp = 2025-11-11 02:46:33.141789943 UTC, acao = Add, detalhes = "populateSample: 10 itens adicionados", status = Sucesso}
+LogEntry {timestamp = 2025-11-11 02:46:35.423081382 UTC, acao = ListItems, detalhes = "List items", status = Sucesso}
+LogEntry {timestamp = 2025-11-11 02:46:46.817775841 UTC, acao = Add, detalhes = "Add: item11 - 11", status = Sucesso}
+LogEntry {timestamp = 2025-11-11 02:46:49.557010501 UTC, acao = ListItems, detalhes = "List items", status = Sucesso}
+LogEntry {timestamp = 2025-11-11 02:47:16.871476777 UTC, acao = Update, detalhes = "UpdateQty: item11 -> 21", status = Sucesso}
+LogEntry {timestamp = 2025-11-11 02:47:19.286282756 UTC, acao = ListItems, detalhes = "List items", status = Sucesso}
+LogEntry {timestamp = 2025-11-11 02:47:30.329976807 UTC, acao = QueryFail, detalhes = "Historico de item11", status = Sucesso}
+LogEntry {timestamp = 2025-11-11 02:47:47.812508189 UTC, acao = QueryFail, detalhes = "Historico de item1", status = Sucesso}
+LogEntry {timestamp = 2025-11-11 02:47:51.126419821 UTC, acao = QueryFail, detalhes = "Comando invalido: oi", status = Falha "Comando invalido"}
+LogEntry {timestamp = 2025-11-11 02:48:01.286060089 UTC, acao = Remove, detalhes = "Remove falha: Estoque insuficiente para item11 (tem 21, pediu 22)", status = Falha "Estoque insuficiente para item11 (tem 21, pediu 22)"}
+LogEntry {timestamp = 2025-11-11 02:48:05.10580489 UTC, acao = Report, detalhes = "Report requested", status = Sucesso}
+LogEntry {timestamp = 2025-11-11 02:48:20.571315823 UTC, acao = Remove, detalhes = "Remove: 20 de item11", status = Sucesso}
+LogEntry {timestamp = 2025-11-11 02:48:22.813255811 UTC, acao = ListItems, detalhes = "List items", status = Sucesso}
+LogEntry {timestamp = 2025-11-11 02:48:29.543301683 UTC, acao = Remove, detalhes = "Remove: 1 de item11", status = Sucesso}
+LogEntry {timestamp = 2025-11-11 02:48:31.343582355 UTC, acao = ListItems, detalhes = "List items", status = Sucesso}
+LogEntry {timestamp = 2025-11-11 02:48:37.495423677 UTC, acao = QueryFail, detalhes = "Historico de item11", status = Sucesso}
+LogEntry {timestamp = 2025-11-11 02:49:47.020885389 UTC, acao = ListItems, detalhes = "List items", status = Sucesso}
